@@ -136,7 +136,7 @@ class Qwen2_VQA:
 
             self.model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
                 self.model_checkpoint,
-                torch_dtype=torch.bfloat16 if self.bf16_support else torch.float16,
+                torch_dtype=torch.float16,
                 device_map="auto",
                 attn_implementation=attention,
                 quantization_config=quantization_config,
