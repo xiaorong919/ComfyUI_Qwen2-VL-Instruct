@@ -29,12 +29,10 @@ class Qwen2_VQA:
                 "text": ("STRING", {"default": "", "multiline": True}),
                 "model": (
                     [
-                        "Qwen2.5-VL-3B-Instruct",
-                        "Qwen2.5-VL-7B-Instruct",
-                        "Qwen2.5-VL-32B-Instruct",
-                        "Qwen2.5-VL-72B-Instruct",
+                        "Qwen2.5-VL-7B-Instruct-AWQ",
+                        "Qwen2.5-VL-3B-Instruct-AWQ",
                     ],
-                    {"default": "Qwen2.5-VL-3B-Instruct"},
+                    {"default": "Qwen2.5-VL-7B-Instruct"},
                 ),
                 "quantization": (
                     ["none", "4bit", "8bit"],
@@ -224,5 +222,10 @@ class Qwen2_VQA:
                 if torch.cuda.is_available():
                     torch.cuda.empty_cache()  # release GPU memory
                     torch.cuda.ipc_collect()
+
+            if isinstance(result, list) and len(result) > 0:
+                result = result[0]
+            elif not isinstance(result, string):
+                result = ''
 
             return (result,)
